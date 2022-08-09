@@ -1,12 +1,13 @@
 import createError from '../helpers/createError.js';
 import Contact from '../models/contact.js';
+
 let controllerContacts = {};
 controllerContacts.getAll = async (req, res) => {
     let list = await Contact.find();
     res.json(list)
 }
 controllerContacts.getById = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     let result = await Contact.findById(id);
     if (!result) {
         throw createError(404);
@@ -20,16 +21,16 @@ controllerContacts.addContact = async (req, res) => {
     res.status(201).json(result)
 }
 controllerContacts.updateById = async (req, res) => {
-    const { id } = req.params;
-    let result = await Contact.findOneAndUpdate({ "_id": id }, req.body, { new: true });
+    const {id} = req.params;
+    let result = await Contact.findOneAndUpdate({"_id": id}, req.body, {new: true});
     if (!result) {
         throw createError(404);
     }
     res.json(result)
 }
 controllerContacts.deleteById = async (req, res) => {
-    const { id } = req.params;
-    let result = await Contact.findByIdAndRemove({ "_id": id });
+    const {id} = req.params;
+    let result = await Contact.findByIdAndRemove(id);
     if (!result) {
         throw createError(404);
     }
@@ -38,12 +39,12 @@ controllerContacts.deleteById = async (req, res) => {
 
 }
 controllerContacts.updateFavoriteById = async (req, res) => {
-    const { id } = req.params;
-    let { favorite = undefined } = req.body;
-    if (favorite === undefined || 'boolean' !==typeof favorite) {
+    const {id} = req.params;
+    let {favorite = undefined} = req.body;
+    if (favorite === undefined || 'boolean' !== typeof favorite) {
         throw createError(400, "missing field favorite");
     }
-    let result = await Contact.findOneAndUpdate({ "_id": id }, { favorite: favorite }, { new: true });
+    let result = await Contact.findOneAndUpdate({"_id": id}, {favorite: favorite}, {new: true});
     if (!result) {
         throw createError(404);
     }

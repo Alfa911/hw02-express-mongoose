@@ -24,7 +24,7 @@ const contactSchema = new Schema(
     }
 );
 
-let handleErrors = (error, data, next) => {
+const handleErrors = (error, data, next) => {
     error.status = 400;
     let { name, code } = error;
     if (code === 11000 || name === 'MongoServerError') {
